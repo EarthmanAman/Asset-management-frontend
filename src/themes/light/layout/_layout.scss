@@ -1,0 +1,71 @@
+.layout_main {
+    display: flex;
+
+    &__side {
+        flex: 1;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        min-height: 720px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+    }
+
+    ;
+
+    &__logo {
+        width: 100%;
+
+        &--img {
+            width: 80%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+    }
+
+    ;
+
+    &__links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        &--span {
+            margin-right: 10px;
+        }
+    }
+
+    ;
+
+    &__button {
+        width: 100%;
+        margin: 10px 0px;
+        border-radius: 5px;
+        text-align: left;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: black;
+    }
+
+    ;
+
+    &__logout {
+        color: brown;
+    }
+
+    ;
+
+    &__component {
+        flex: 5;
+        padding: 0px 25px;
+        position: relative;
+    }
+
+    ;
+
+    .active {
+        font-weight: 700;
+        background-color: #AEA6A4;
+    }
+}
