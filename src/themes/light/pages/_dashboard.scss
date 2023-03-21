@@ -36,6 +36,7 @@
 
 .dashboard-cat-ven {
     flex: 3;
+    padding-right: 2%;
 }
 
 .dashboard-man {
@@ -89,5 +90,63 @@
     img {
         width: auto;
         height: 100%;
+    }
+}
+
+.dashboard-ven {
+    margin-top: 2%;
+}
+
+.dashboard-ven-cards {
+    display: flex;
+}
+
+.dashboard-ven-card {
+    flex: 1;
+    background-color: #AAB0B3;
+    padding: 1%;
+    margin-right: 1%;
+    display: flex;
+
+    &__image {
+        width: 50px;
+        height: 50px;
+        margin-right: 2%;
+
+        img {
+            height: 100%;
+            width: auto;
+        }
+    };
+
+    p {
+        margin-bottom: 0px !important;
+    }
+}
+
+
+.dashboard-man-card {
+    flex: 1;
+    background-color: #AAB0B3;
+    padding: 1%;
+    margin-right: 1%;
+    margin-bottom: 2%;
+    display: flex;
+    border-radius: 10px;
+
+    &__image {
+        width: 50px;
+        height: 50px;
+        margin-right: 2%;
+
+        img {
+            height: 100%;
+            width: auto;
+            border-radius: 10px;
+        }
+    };
+
+    p {
+        margin-bottom: 0px !important;
     }
 }
