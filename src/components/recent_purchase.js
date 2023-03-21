@@ -16,6 +16,7 @@ class RecentPurchase extends React.Component {
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Total</th>
+                <th>View</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,20 +28,13 @@ class RecentPurchase extends React.Component {
                 <td>@mdo</td>
                 <td>@mdo</td>
                 <td>@mdo</td>
+                <td>@mdo</td> 
                 <td>@mdo</td>
-                <td>@mdo</td>
+                <td>
+                    <a href=''>View</a>
+                </td>
                 </tr>
-                <tr>
-                <td>2</td>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                </tr>
+                
                 
             </tbody>
             </Table>
