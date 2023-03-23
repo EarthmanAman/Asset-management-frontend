@@ -1,10 +1,25 @@
 import React from "react";
 import Layout from "../components/layout";
 import RecentPurchase from "../components/recent_purchase";
+import { api_stub_get } from "../api/_stub";
 
 class Dashboard extends React.Component {
+    constructor(props){
+        super(props)
 
+        this.state = {
+            "totals": null
+        }
+    }
+    componentDidMount = async() => {
+        let totals = await api_stub_get("/equipment/dashboard/totals/1/")
+        this.setState({
+            "totals":totals
+        })
+    }
     render(){
+        const {totals} = this.state
+        console.log(totals)
         return (
             <Layout>
                 <div className="dashboard-main">
@@ -15,30 +30,30 @@ class Dashboard extends React.Component {
                     <div className="top-cards">
                         <div className="top-card">
                             <h6>Total Assets</h6>
-                            <h3>102</h3>
+                            <h3>{totals !== null ? totals.eq_total[0] : 0}</h3>
                             <a href="">View all Assets  </a>
                         </div>
                         <div className="top-card">
                             <h6>This Month Assets</h6>
-                            <h3>20</h3>
+                            <h3>{totals !== null ? totals.eq_total[1] : 0}</h3>
                             <a href="">View</a>
                         </div>
 
                         <div className="top-card">
                             <h6>Consumables</h6>
-                            <h3>15</h3>
+                            <h3>{totals !== null ? totals.consumable_total : 0}</h3>
                             <a href="">View all Consumables</a>
                         </div>
 
                         <div className="top-card">
-                            <h6>Supplier</h6>
-                            <h3>17</h3>
+                            <h6>Vendors</h6>
+                            <h3>{totals !== null ? totals.vendors_total : 0}</h3>
                             <a href="">View all suppliers</a>
                         </div>
 
                         <div className="top-card">
                             <h6>Employees</h6>
-                            <h3>30</h3>
+                            <h3>{totals !== null ? totals.employee_total : 0}</h3>
                             <a href="">View all Employees</a>
                         </div>
                         
@@ -52,52 +67,25 @@ class Dashboard extends React.Component {
                             <div className="dashboard-cat">
                                 <h5>Categories</h5>
                                 <div className="dashboard_cat_cards">
-                                    <div className="dashboard_cat_card">
+                                    {totals != null ? 
+                                        totals.categories.map((category) => 
+                                        <div className="dashboard_cat_card">
 
-                                        <div className="dashboard_cat_card__total">
-                                            <p>15</p>
+                                            <div className="dashboard_cat_card__total">
+                                                <p>{category.total}</p>
+                                            </div>
+                                            <div className="dashboard_cat_card__image">
+                                                <img src={category.image} alt="laptop"/>
+                                            </div>
+                                            <h6>{category.name}</h6>
+                                            <a href="">View</a>
                                         </div>
-                                        <div className="dashboard_cat_card__image">
-                                            <img src="https://cdn.pixabay.com/photo/2012/04/24/23/17/laptop-41070_960_720.png" alt="laptop"/>
-                                        </div>
-                                        <h6>Laptops</h6>
-                                        <a href="">View</a>
-                                    </div>
-                                   <div className="dashboard_cat_card">
-
-                                        <div className="dashboard_cat_card__total">
-                                            <p>15</p>
-                                        </div>
-                                        <div className="dashboard_cat_card__image">
-                                            <img src="https://cdn.pixabay.com/photo/2012/04/24/23/17/laptop-41070_960_720.png" alt="laptop"/>
-                                        </div>
-                                        <h6>Laptops</h6>
-                                        <a href="">View</a>
-                                    </div>
-
-                                    <div className="dashboard_cat_card">
-
-                                        <div className="dashboard_cat_card__total">
-                                            <p>15</p>
-                                        </div>
-                                        <div className="dashboard_cat_card__image">
-                                            <img src="https://cdn.pixabay.com/photo/2012/04/24/23/17/laptop-41070_960_720.png" alt="laptop"/>
-                                        </div>
-                                        <h6>Laptops</h6>
-                                        <a href="">View</a>
-                                    </div>
-
-                                    <div className="dashboard_cat_card">
-
-                                        <div className="dashboard_cat_card__total">
-                                            <p>15</p>
-                                        </div>
-                                        <div className="dashboard_cat_card__image">
-                                            <img src="https://cdn.pixabay.com/photo/2012/04/24/23/17/laptop-41070_960_720.png" alt="laptop"/>
-                                        </div>
-                                        <h6>Laptops</h6>
-                                        <a href="">View</a>
-                                    </div>
+                                        )
+                                    :
+                                    <p>No categories</p>
+                                    }
+                                    
+                                
                                 </div>
                             </div>
 
