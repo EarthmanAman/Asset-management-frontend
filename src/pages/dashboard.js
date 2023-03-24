@@ -10,19 +10,22 @@ class Dashboard extends React.Component {
         this.state = {
             "totals": null,
             "vendors":[],
+            "manufacturers": [],
         }
     }
     componentDidMount = async() => {
         let totals = await api_stub_get("/equipment/dashboard/totals/1/")
         let vendors = await api_stub_get("/vendor/")
+        let manufacturers = await api_stub_get("/category/man/")
         this.setState({
             "totals":totals,
             "vendors": vendors,
+            "manufacturers": manufacturers,
         })
     }
     render(){
-        const {totals, vendors} = this.state
-        console.log(vendors)
+        const {totals, vendors, manufacturers} = this.state
+        console.log(manufacturers)
         return (
             <Layout>
                 <div className="dashboard-main">
@@ -117,61 +120,21 @@ class Dashboard extends React.Component {
                         {/* RIGHT - MANUFACTURERS */}
                         <div className="dashboard-man">
                             <h5>Manufacturers</h5>
+                            {manufacturers.map((manufacturer) => 
+                                <div className="dashboard-man-card">
+                                    <div className="dashboard-man-card__image">
+                                        <img src={manufacturer.image} alt="manufacturer" />
+                                    </div>
+                                    <div>
+                                        <h6>{manufacturer.name}</h6>
+                                        <p>Total : <span>{manufacturer.total}</span></p>
+                                    </div>
+                                    
+                                </div>
+                            )}
+                            
 
-                            <div className="dashboard-man-card">
-                                <div className="dashboard-man-card__image">
-                                    <img src={require("../assets/odc.jpeg")} alt="vendor" />
-                                </div>
-                                <div>
-                                    <h6>ODC</h6>
-                                    <p>Total : <span>34</span></p>
-                                </div>
-                                
-                            </div>
-
-                            <div className="dashboard-man-card">
-                                <div className="dashboard-man-card__image">
-                                    <img src={require("../assets/odc.jpeg")} alt="vendor" />
-                                </div>
-                                <div>
-                                    <h6>ODC</h6>
-                                    <p>Total : <span>34</span></p>
-                                </div>
-                                
-                            </div>
-
-                            <div className="dashboard-man-card">
-                                <div className="dashboard-man-card__image">
-                                    <img src={require("../assets/odc.jpeg")} alt="vendor" />
-                                </div>
-                                <div>
-                                    <h6>ODC</h6>
-                                    <p>Total : <span>34</span></p>
-                                </div>
-                                
-                            </div>
-
-                            <div className="dashboard-man-card">
-                                <div className="dashboard-man-card__image">
-                                    <img src={require("../assets/odc.jpeg")} alt="vendor" />
-                                </div>
-                                <div>
-                                    <h6>ODC</h6>
-                                    <p>Total : <span>34</span></p>
-                                </div>
-                                
-                            </div>
-
-                            <div className="dashboard-man-card">
-                                <div className="dashboard-man-card__image">
-                                    <img src={require("../assets/odc.jpeg")} alt="vendor" />
-                                </div>
-                                <div>
-                                    <h6>ODC</h6>
-                                    <p>Total : <span>34</span></p>
-                                </div>
-                                
-                            </div>
+                           
                         </div>
                     </div>
 
