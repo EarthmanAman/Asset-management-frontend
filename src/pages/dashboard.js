@@ -11,21 +11,24 @@ class Dashboard extends React.Component {
             "totals": null,
             "vendors":[],
             "manufacturers": [],
+            "recent": [],
         }
     }
     componentDidMount = async() => {
         let totals = await api_stub_get("/equipment/dashboard/totals/1/")
         let vendors = await api_stub_get("/vendor/")
         let manufacturers = await api_stub_get("/category/man/")
+        let recent = await api_stub_get("/consumable/recent_purchase/")
         this.setState({
             "totals":totals,
             "vendors": vendors,
             "manufacturers": manufacturers,
+            "recent": recent,
         })
     }
     render(){
-        const {totals, vendors, manufacturers} = this.state
-        console.log(manufacturers)
+        const {totals, vendors, manufacturers, recent} = this.state
+        // console.log(recent)
         return (
             <Layout>
                 <div className="dashboard-main">
@@ -144,7 +147,7 @@ class Dashboard extends React.Component {
 
 
                         <div>
-                            <RecentPurchase />
+                            <RecentPurchase purchases={recent}/>
                         </div>
                     </div>
                 </div>

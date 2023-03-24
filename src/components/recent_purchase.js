@@ -1,8 +1,11 @@
+import { type } from '@testing-library/user-event/dist/type';
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 
 class RecentPurchase extends React.Component {
     render() {
+        const {purchases} = this.props
+        let idx = 1
         return (
             <Table striped>
             <thead>
@@ -20,20 +23,24 @@ class RecentPurchase extends React.Component {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                <td>1</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>@mdo</td> 
-                <td>@mdo</td>
-                <td>
-                    <a href=''>View</a>
-                </td>
-                </tr>
+
+                {purchases.map((purchase) => 
+                    <tr>
+                        <td>{idx++}</td>
+                        <td>{purchase.name}</td>
+                        <td>{purchase.p_date}</td>
+                        <td>{purchase.manufacturer}</td>
+                        <td>{typeof purchase.vendor == 'string' ? purchase.vendor : purchase.vendor.map((vendor) => <p>{vendor.vendor}</p>)}</td>
+                        <td>{purchase.invoice_no}</td>
+                        <td>{purchase.quantity}</td>
+                        <td>{purchase.price}</td> 
+                        <td>{parseFloat(purchase.quantity * parseFloat(purchase.price)).toFixed(2)}</td>
+                        <td>
+                            <a href=''>View</a>
+                        </td>
+                    </tr>
+                )}
+                
                 
                 
             </tbody>
