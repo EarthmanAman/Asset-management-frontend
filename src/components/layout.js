@@ -1,5 +1,6 @@
 import React from 'react';
-import { Sidebar, Menu, MenuItem, Image } from 'react-pro-sidebar';
+import { Link } from 'react-router-dom';
+import { Sidebar, Menu, MenuItem} from 'react-pro-sidebar';
 import TopBar from './topBar';
 
 
@@ -22,9 +23,9 @@ class Layout extends React.Component {
                 <div style={{display:"flex", justifyContent:"center", marginTop:'15%', marginBottom: '8%'}}>
                     <img src={require("../assets/mbtl.png")} style={{width:"80%", height:'auto'}}/>
                 </div>
-              <MenuItem>DASHBOARD</MenuItem>
-              <MenuItem> Calendar</MenuItem>
-              <MenuItem> E-commerce</MenuItem>
+              <MenuItem component={<Link to="/" />}>IT</MenuItem>
+              {/* <MenuItem> Calendar</MenuItem>
+              <MenuItem> E-commerce</MenuItem> */}
             </Menu>
           </Sidebar>
           <main style={{width:"100%", marginLeft:5, marginRight:5}}>

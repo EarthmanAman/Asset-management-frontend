@@ -7,7 +7,7 @@ class RecentPurchase extends React.Component {
         const {purchases} = this.props
         let idx = 1
         return (
-            <Table striped>
+            <Table striped size='sm'>
             <thead>
                 <tr>
                 <th>#</th>

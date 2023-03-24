@@ -1,4 +1,7 @@
 import React from "react";
+
+import { Link } from 'react-router-dom';
+
 import Layout from "../components/layout";
 import RecentPurchase from "../components/recent_purchase";
 import { api_stub_get } from "../api/_stub";
@@ -40,7 +43,9 @@ class Dashboard extends React.Component {
                         <div className="top-card">
                             <h6>Total Assets</h6>
                             <h3>{totals !== null ? totals.eq_total[0] : 0}</h3>
-                            <a href="">View all Assets  </a>
+                            <Link to="/total_asset/">
+                                <p>View all Assets </p>
+                            </Link>
                         </div>
                         <div className="top-card">
                             <h6>This Month Assets</h6>

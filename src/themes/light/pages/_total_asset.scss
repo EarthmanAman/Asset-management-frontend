@@ -1,0 +1,24 @@
+.total-asset-main {
+    // padding-left: 2%;
+    padding-right: 4%;
+}
+.total-asset-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2%;
+
+}
+
+.total-search-form {
+    display: flex;
+}
+
+.total-asset-tabs {
+    display: flex;
+    flex-direction: row;
+}
+
+.total-asset-tab {
+    flex: 1
+}
