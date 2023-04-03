@@ -8,10 +8,40 @@ import { Button } from "react-bootstrap";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import TotalAssetTable from "../components/total_asset_table";
+
+import { api_stub_get } from "../api/_stub";
+
 
 class TotalAsset extends React.Component {
+    state = {
+        "totals": [],
+        "search": null,
+        "search_value": null
+    }
+
+    onSearch = (text) => {
+        const {totals} = this.state
+        const t = text.target.value.toLowerCase()
+        let searches = totals.filter(x => 
+            x.name.toLowerCase().includes(t) ||
+            x.manufacturer.toLowerCase().includes(t)
+            )
+        console.log(searches)
+        this.setState({
+            "search":searches,
+        })
+    }
 
     
+    componentDidMount = async() => {
+        let totals = await api_stub_get("/consumable/total_asset/")
+        
+        this.setState({
+            "totals":totals,
+            "search": null
+        })
+    }
 
     render(){
         const settings = {
@@ -23,7 +53,9 @@ class TotalAsset extends React.Component {
             autoplay: true,
             autoplaySpeed: 5000,
           };
-
+        
+        const {totals, search} = this.state
+        
         return (
             <Layout>
                 <div className="total-asset-main">
@@ -31,14 +63,14 @@ class TotalAsset extends React.Component {
                     <h1>Total asset</h1>
                     <div>
                         <Form className="total-search-form">
-                            <Form.Control type="text" placeholder="Search..."  size="sm" style={{marginRight:2}}/>
-                            <Button variant="primary" type="submit" size="sm">Search</Button>
+                            <Form.Control type="text" placeholder="Search..."  size="sm" style={{marginRight:2}} onChange={(text) => this.onSearch(text)}/>
+                            <Button variant="primary" type="submit" size="sm" >Search</Button>
                         </Form>
                     </div>
                 </div>
 
                 {/* CARDS */}
-                <div className="total-asset-tabs-main">
+                {/* <div className="total-asset-tabs-main">
                     <h5>Categories</h5>
                     
                     <Slider {...settings} className="total-asset-tabs">
@@ -50,7 +82,9 @@ class TotalAsset extends React.Component {
                             </div>
                         </div>
                     </Slider>
-                </div>
+                </div> */}
+                <TotalAssetTable purchases={search != null ? search :totals}/>
+
                 </div>
             </Layout>
         )
