@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Layout from "../components/layout";
 import RecentPurchase from "../components/recent_purchase";
+
 import { api_stub_get } from "../api/_stub";
 
 class Dashboard extends React.Component {
@@ -16,6 +17,12 @@ class Dashboard extends React.Component {
             "manufacturers": [],
             "recent": [],
         }
+    }
+
+    equipmentAdd = () => {
+        this.setState({
+            "equipment_add": !this.state.equipment_add
+        })
     }
     componentDidMount = async() => {
         let totals = await api_stub_get("/equipment/dashboard/totals/1/")
@@ -50,13 +57,17 @@ class Dashboard extends React.Component {
                         <div className="top-card">
                             <h6>This Month Assets</h6>
                             <h3>{totals !== null ? totals.eq_total[1] : 0}</h3>
-                            <a href="">View</a>
+                            <Link to="/month_asset/">
+                                <a href="">View</a>
+                            </Link>
                         </div>
 
                         <div className="top-card">
                             <h6>Consumables</h6>
                             <h3>{totals !== null ? totals.consumable_total : 0}</h3>
-                            <a href="">View all Consumables</a>
+                            <Link to="/consumables/">
+                                <a href="">View all Consumables</a>
+                            </Link>
                         </div>
 
                         <div className="top-card">
@@ -108,7 +119,7 @@ class Dashboard extends React.Component {
                                 <h5>Vendors</h5>
                                 <div className="dashboard-ven-cards">
                                     {vendors.map((vendor) => 
-                                        <div className="dashboard-ven-card">
+                                        <div key={vendor.id} className="dashboard-ven-card">
                                             <div className="dashboard-ven-card__image">
                                                 <img src={vendor.image} alt="vendor" />
                                             </div>
@@ -129,7 +140,7 @@ class Dashboard extends React.Component {
                         <div className="dashboard-man">
                             <h5>Manufacturers</h5>
                             {manufacturers.map((manufacturer) => 
-                                <div className="dashboard-man-card">
+                                <div key={manufacturer.id} className="dashboard-man-card">
                                     <div className="dashboard-man-card__image">
                                         <img src={manufacturer.image} alt="manufacturer" />
                                     </div>
@@ -156,6 +167,7 @@ class Dashboard extends React.Component {
                         </div>
                     </div>
                 </div>
+
             </Layout>
         )
     }

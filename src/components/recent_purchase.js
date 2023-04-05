@@ -25,7 +25,7 @@ class RecentPurchase extends React.Component {
             <tbody>
 
                 {purchases.map((purchase) => 
-                    <tr>
+                    <tr key={purchase.id}>
                         <td>{idx++}</td>
                         <td>{purchase.name}</td>
                         <td>{purchase.p_date}</td>

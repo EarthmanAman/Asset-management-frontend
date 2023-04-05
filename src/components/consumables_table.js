@@ -2,7 +2,7 @@ import { type } from '@testing-library/user-event/dist/type';
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 
-class TotalAssetTable extends React.Component {
+class ConsumableTable extends React.Component {
     render() {
         const {purchases} = this.props
         let idx = 1
@@ -30,9 +30,9 @@ class TotalAssetTable extends React.Component {
                         <td>{idx++}</td>
                         <td>{purchase.name}</td>
                         <td>{purchase.p_date}</td>
-                        <td>{purchase.category}</td>
-                        <td>{purchase.manufacturer}</td>
-                        <td>{typeof purchase.vendor == 'string' ? purchase.vendor : purchase.vendor.map((vendor) => <p>{vendor.vendor}</p>)}</td>
+                        <td>{purchase.category_manufacturer.category.name}</td>
+                        <td>{purchase.category_manufacturer.manufacturer.name}</td>
+                        <td>{purchase.vendor.name}</td>
                         <td>{purchase.invoice_no}</td>
                         <td>{purchase.quantity}</td>
                         <td>{purchase.price}</td> 
@@ -51,4 +51,4 @@ class TotalAssetTable extends React.Component {
     }
 }
 
-export default TotalAssetTable;
+export default ConsumableTable;
