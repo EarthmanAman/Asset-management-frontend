@@ -4,7 +4,11 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { Col, Row } from 'react-bootstrap';
 
+import { connect } from "react-redux";
+
 import { api_stub_get, api_stub_post } from "../api/_stub";
+import SpinnerComponent from "../utils/spinner";
+import { addEquipment } from '../redux/splices/addEquipmentSplice';
 
 class EquipmentAddModal extends React.Component {
 
@@ -14,12 +18,14 @@ class EquipmentAddModal extends React.Component {
         classifications: [],
         status: [],
         vendors: [],
+        submitted: false,
+        success: false,
     }
     handleClose = () => {
         return this.props.onClose();
     }
   
-    onSubmit = async (event) => {
+    onSubmit = (event) => {
         event.preventDefault();
         const category = event.target.category.value
         const manufacturer = event.target.manufacturer.value
@@ -56,8 +62,29 @@ class EquipmentAddModal extends React.Component {
             color:color,
             description:description,
         }
-        let response = await api_stub_post("/equipment/create/", context)
 
+        this.setState({
+            submitted: true
+        })
+        this.props.addEquipment(context) 
+        // api_stub_post("/equipment/create/", context)
+
+       
+
+    }
+
+    UNSAFE_componentWillReceiveProps = async (nextProps) => {
+        
+        if(nextProps.status.isLoading === false && parseInt(nextProps.status.status.status) === 200){
+       
+            this.setState({
+                success: true
+            })
+        }else {
+            this.setState({
+                success: false
+            })
+        }
     }
 
     componentDidMount = async() => {
@@ -77,7 +104,8 @@ class EquipmentAddModal extends React.Component {
     }
 render(){
 
-    const {categories, manufacturers, classifications, status, vendors} = this.state
+    const {categories, manufacturers, classifications, status, vendors, success} = this.state
+  console.log(this.props.status.isLoading)
   return (
       <Modal show={this.props.visible} onHide={this.handleClose} size='lg'>
         <Modal.Header closeButton>
@@ -85,7 +113,14 @@ render(){
         </Modal.Header>
         <Form onSubmit={this.onSubmit}>
         <Modal.Body>
-            
+            <div style={{position:"relative"}}>
+                {this.props.status.isLoading == true ? 
+                    <div className='addEquipmentSpinner'>
+                        <SpinnerComponent visible={true} />
+                    </div>
+                : null}
+
+                {success === true ? <div className='alert alert-success'>Uploaded successfully</div>: null}
                 <Row>
                     <Col>
                         <Form.Label>Category</Form.Label>
@@ -219,7 +254,11 @@ render(){
                         <Form.Control type="text" placeholder="Description" as="textarea" rows={3} name='description' size='sm' />
                     </Form.Group>
                 </div>
-            
+
+
+                
+
+            </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={this.handleClose}>
@@ -236,4 +275,10 @@ render(){
 }
 }
 
-export default EquipmentAddModal;
+const mapStateToProps = (state) => ({
+    status: state.addEquipment
+  });
+  
+  const mapDispatchToProps = { addEquipment };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(EquipmentAddModal);

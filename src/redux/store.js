@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import postsReducer from './splices/test'
+import totalsSlice from './splices/test'
+import addEquipmentSplice from './splices/addEquipmentSplice'
 
 export default configureStore({
   reducer: {
-    posts: postsReducer
+    totals: totalsSlice,
+    addEquipment: addEquipmentSplice,
   }
 })

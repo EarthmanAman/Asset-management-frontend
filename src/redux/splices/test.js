@@ -1,14 +1,39 @@
-import { createSlice } from '@reduxjs/toolkit'
+import {createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { api_stub_get } from '../../api/_stub'
 
-const initialState = [
-  { id: '1', title: 'First Post!', content: 'Hello!' },
-  { id: '2', title: 'Second Post', content: 'More text' }
-]
+const initialState = {
+  contents: null,
+  isLoading: false,
+  error: null,
+}
 
-const postsSlice = createSlice({
-  name: 'posts',
+export const getTotals = createAsyncThunk(
+  'content/totals',
+  async () => {
+    const res = await api_stub_get("/equipment/dashboard/totals/1/")
+    return res
+  }
+)
+
+const totalsSlice = createSlice({
+  name: 'totals',
   initialState,
-  reducers: {}
+  reducers: {},
+
+  extraReducers: (builder) => {
+    builder.addCase(getTotals.pending, (state) => {
+      state.isLoading = true
+    })
+    builder.addCase(getTotals.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.contents = action.payload
+    })
+    builder.addCase(getTotals.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.error.message
+    })
+  },
+  
 })
 
-export default postsSlice.reducer
+export default totalsSlice.reducer

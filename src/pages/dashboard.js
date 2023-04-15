@@ -1,18 +1,19 @@
 import React from "react";
 
 import { Link } from 'react-router-dom';
-
+import { connect } from "react-redux";
 import Layout from "../components/layout";
 import RecentPurchase from "../components/recent_purchase";
 
 import { api_stub_get } from "../api/_stub";
+import { getTotals } from "../redux/splices/test";
+import SpinnerComponent from "../utils/spinner";
 
 class Dashboard extends React.Component {
     constructor(props){
         super(props)
 
         this.state = {
-            "totals": null,
             "vendors":[],
             "manufacturers": [],
             "recent": [],
@@ -25,22 +26,27 @@ class Dashboard extends React.Component {
         })
     }
     componentDidMount = async() => {
-        let totals = await api_stub_get("/equipment/dashboard/totals/1/")
         let vendors = await api_stub_get("/vendor/")
         let manufacturers = await api_stub_get("/category/man/")
         let recent = await api_stub_get("/consumable/recent_purchase/")
+
+        this.props.getTotals()
+
         this.setState({
-            "totals":totals,
             "vendors": vendors,
             "manufacturers": manufacturers,
             "recent": recent,
         })
     }
     render(){
-        const {totals, vendors, manufacturers, recent} = this.state
-        // console.log(recent)
+        const {vendors, manufacturers, recent} = this.state
+        const totals = this.props.totals.contents
+        const totalsLoading = this.props.totals.isLoading
+        
         return (
             <Layout>
+
+                {totalsLoading === true ? <SpinnerComponent visible={true} /> : null}
                 <div className="dashboard-main">
                     <div className="dashboard-welcome">
                         <h1>Welcome, Hashim</h1>
@@ -173,4 +179,10 @@ class Dashboard extends React.Component {
     }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+    totals: state.totals
+  });
+  
+  const mapDispatchToProps = { getTotals };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
