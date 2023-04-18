@@ -7,6 +7,7 @@ import RecentPurchase from "../components/recent_purchase";
 
 import { api_stub_get } from "../api/_stub";
 import { getTotals } from "../redux/splices/test";
+import { updateId } from "../redux/splices/addCategoryIdSplice";
 import SpinnerComponent from "../utils/spinner";
 
 class Dashboard extends React.Component {
@@ -25,6 +26,11 @@ class Dashboard extends React.Component {
             "equipment_add": !this.state.equipment_add
         })
     }
+
+    handleLinkClicked = (e, id) => {
+        
+        this.props.updateId(id)
+    }
     componentDidMount = async() => {
         let vendors = await api_stub_get("/vendor/")
         let manufacturers = await api_stub_get("/category/man/")
@@ -42,7 +48,6 @@ class Dashboard extends React.Component {
         const {vendors, manufacturers, recent} = this.state
         const totals = this.props.totals.contents
         const totalsLoading = this.props.totals.isLoading
-        
         return (
             <Layout>
 
@@ -109,7 +114,7 @@ class Dashboard extends React.Component {
                                                 <img src={category.image} alt="laptop"/>
                                             </div>
                                             <h6>{category.name}</h6>
-                                            <a href="">View</a>
+                                            <Link to={`/category/`} onClick={(e)=>this.handleLinkClicked(e, category.id)}>View</Link>
                                         </div>
                                         )
                                     :
@@ -183,6 +188,6 @@ const mapStateToProps = (state) => ({
     totals: state.totals
   });
   
-  const mapDispatchToProps = { getTotals };
+  const mapDispatchToProps = { getTotals, updateId};
   
   export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -106,7 +106,6 @@ class EquipmentAddModal extends React.Component {
 render(){
 
     const {categories, manufacturers, classifications, status, vendors, success} = this.state
-  console.log(this.props.status.isLoading)
   return (
       <Modal show={this.props.visible} onHide={this.handleClose} size='lg'>
         <Modal.Header closeButton>
