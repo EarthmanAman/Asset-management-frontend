@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../components/layout";
 import { api_stub_get } from "../api/_stub";
 import { connect } from "react-redux";
-import { updateVendorId } from "../redux/splices/addVendorIdSplice";
+import { addVendor } from "../redux/splices/addVendorIdSplice";
 import VendorDetailTable from "../components/vendorDetailTable";
 
 class VendorDetailPage extends React.Component {
@@ -10,21 +10,20 @@ class VendorDetailPage extends React.Component {
         assets: null
     }
     componentDidMount = async() => {
-      console.log(this.props.vendor_id)
-        let equipments = await api_stub_get(`/vendor/${this.props.vendor_id.payload}/`)
         this.setState({
-            assets:equipments
+            assets:this.props.vendor.vendor
         })
     }
     render(){
        
         const {assets} = this.state
+        console.log(assets)
         return (
             <Layout>
                 
 
                 <div>
-                    {assets != null ? 
+                    {assets != null && assets != new Object? 
                     <div>
                         <h1>{assets.name}</h1>
                         <VendorDetailTable purchases={assets.assets} />
@@ -37,9 +36,9 @@ class VendorDetailPage extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    vendor_id: state.addVendorId.vendor_id
+    vendor: state.addVendor
   });
   
-  const mapDispatchToProps = { updateVendorId };
+  const mapDispatchToProps = { addVendor };
   
   export default connect(mapStateToProps, mapDispatchToProps)(VendorDetailPage);
