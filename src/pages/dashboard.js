@@ -8,6 +8,7 @@ import RecentPurchase from "../components/recent_purchase";
 import { api_stub_get } from "../api/_stub";
 import { getTotals } from "../redux/splices/test";
 import { updateId } from "../redux/splices/addCategoryIdSplice";
+import { updateVendorId } from "../redux/splices/addVendorIdSplice";
 import SpinnerComponent from "../utils/spinner";
 
 class Dashboard extends React.Component {
@@ -30,6 +31,11 @@ class Dashboard extends React.Component {
     handleLinkClicked = (e, id) => {
         
         this.props.updateId(id)
+    }
+
+    handleVendorLinkClicked = (e, id) => {
+        
+        this.props.updateVendorId(id)
     }
     componentDidMount = async() => {
         let vendors = await api_stub_get("/vendor/")
@@ -138,6 +144,11 @@ class Dashboard extends React.Component {
                                                 <h6>{vendor.name}</h6>
                                                 <p>Total : <span>{vendor.total}</span></p>
                                             </div>
+                                            <div>
+                                                <Link to={"/vendor/"} onClick={(e) => this.handleVendorLinkClicked(e, vendor.id)}>
+                                                    View
+                                                </Link>
+                                            </div>
                                             
                                         </div>
 
@@ -188,6 +199,6 @@ const mapStateToProps = (state) => ({
     totals: state.totals
   });
   
-  const mapDispatchToProps = { getTotals, updateId};
+  const mapDispatchToProps = { getTotals, updateId, updateVendorId};
   
   export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

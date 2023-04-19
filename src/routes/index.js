@@ -7,6 +7,7 @@ const TotalAssetPage = lazy(() => import('../pages/total_asset'));
 const MonthAssetPage = lazy(() => import('../pages/month_asset'));
 const ConsumableAssetPage = lazy(() => import('../pages/consumables'));
 const CategoryAssetPage = lazy(() => import('../pages/category'));
+const VendorAssetPage = lazy(() => import('../pages/vendor'));
 
 
 class RoutesComponent extends React.Component {
@@ -20,6 +21,7 @@ class RoutesComponent extends React.Component {
                         <Route path="/month_asset/" exact element={<MonthAssetPage />} />
                         <Route path="/consumables/" exact element={<ConsumableAssetPage />} />
                         <Route path="/category/" exact element={<CategoryAssetPage />} />
+                        <Route path="/vendor/" exact element={<VendorAssetPage />} />
                     </Routes>
                 </Suspense>
             </Router>
