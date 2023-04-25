@@ -2,21 +2,22 @@ import React from "react";
 import Layout from "../components/layout";
 import { api_stub_get } from "../api/_stub";
 import { connect } from "react-redux";
-import VendorDetailTable from "../components/vendorDetailTable";
 
-class VendorDetailPage extends React.Component {
+import CategoryDetailTable from "../components/categoryDetailTable";
+
+class ManufacturerDetailPage extends React.Component {
     state = {
         assets: null
     }
     componentDidMount = async() => {
-        console.log(this.props.vendor.vendor)
+        console.log(this.props.manufacturer.manufacturer)
         this.setState({
-            assets:this.props.vendor.vendor
+            assets:this.props.manufacturer.manufacturer
         })
     }
     render(){
        
-        const assets = this.props.vendor.vendor
+        const assets = this.props.manufacturer.manufacturer
         // console.log(assets)
         return (
             <Layout>
@@ -26,7 +27,7 @@ class VendorDetailPage extends React.Component {
                     {assets != null && assets != new Object? 
                     <div>
                         <h1>{assets.name}</h1>
-                        <VendorDetailTable purchases={assets.assets} />
+                        <CategoryDetailTable purchases={assets.assets} />
                     </div>
                     :null}
                 </div>
@@ -36,9 +37,9 @@ class VendorDetailPage extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    vendor: state.addVendor
+    manufacturer: state.manufacturer
   });
   
   const mapDispatchToProps = { };
   
-  export default connect(mapStateToProps, mapDispatchToProps)(VendorDetailPage);
+  export default connect(mapStateToProps, mapDispatchToProps)(ManufacturerDetailPage);

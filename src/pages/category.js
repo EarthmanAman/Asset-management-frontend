@@ -10,11 +10,12 @@ class CategoryDetailPage extends React.Component {
         assets: null
     }
     componentDidMount = async() => {
-      console.log(this.props.category_id)
-        let equipments = await api_stub_get(`/category/${this.props.category_id.payload}/`)
-        this.setState({
-            assets:equipments
-        })
+    //   console.log(this.props.category_id)
+    let id = this.props.category_id.payload != undefined ? this.props.category_id.payload : this.props.category_id
+    let equipments = await api_stub_get(`/category/${id}/`)
+    this.setState({
+        assets:equipments
+    })
     }
     render(){
         return (

@@ -2,7 +2,10 @@ import {createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { api_stub_post, api_stub_get } from '../../api/_stub'
 
 const initialState = {
-  vendor: {}
+  vendor: {
+    name: null,
+    assets: []
+  }
 }
 
 export const addVendor = createAsyncThunk(
