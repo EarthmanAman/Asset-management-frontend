@@ -9,12 +9,7 @@ class ManufacturerDetailPage extends React.Component {
     state = {
         assets: null
     }
-    componentDidMount = async() => {
-        console.log(this.props.manufacturer.manufacturer)
-        this.setState({
-            assets:this.props.manufacturer.manufacturer
-        })
-    }
+  
     render(){
        
         const assets = this.props.manufacturer.manufacturer
